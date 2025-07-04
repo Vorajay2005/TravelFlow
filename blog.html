@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelFlow - Blog</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #feca57;
+            --dark-color: #1e3c72;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .navbar-brand {
+            color: var(--dark-color) !important;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .navbar-brand i {
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-color) !important;
+            position: relative;
+            margin: 0 10px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Blog Header */
+        .blog-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 150px 0 80px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 70px;
+        }
+        
+        .blog-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1506929562872-bb421503ef21?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
+        .blog-header .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .blog-header h1 {
+            font-weight: 800;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .blog-header .lead {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Blog Content */
+        .blog-content {
+            padding: 80px 0;
+        }
+        
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        
+        .blog-filters .btn {
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: 600;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .blog-filters .btn:hover,
+        .blog-filters .btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Blog Cards */
+        .blog-card {
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+            background: white;
+            height: 100%;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .blog-card.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .blog-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .blog-card:hover .blog-img {
+            transform: scale(1.05);
+        }
+        
+        .blog-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 5px 15px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark-color);
+        }
+        
+        .blog-body {
+            padding: 25px;
+        }
+        
+        .blog-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .blog-date {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .btn-read {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-read:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 60px 0;
+            margin: 80px 0;
+            border-radius: 15px;
+        }
+        
+        .newsletter-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            border-radius: 50px;
+            padding: 15px 25px;
+            border: none;
+            margin-right: 10px;
+            width: 70%;
+        }
+        
+        .btn-subscribe {
+            background: white;
+            color: var(--secondary-color);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-subscribe:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-links h5 {
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .footer-links h5::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-color);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            margin-top: 50px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .blog-header h1 {
+                font-size: 2.8rem;
+            }
+            
+            .blog-header .lead {
+                font-size: 1.3rem;
+            }
+            
+            .newsletter-input {
+                width: 100%;
+                margin-bottom: 15px;
+                margin-right: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .blog-header {
+                padding: 120px 0 60px;
+            }
+            
+            .blog-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .blog-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .blog-filters .btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mountain"></i>
+                TravelFlow
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="destinations.html">Destinations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="packages.html">Packages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">Contact</a>
+                    </li>
+                </ul>
+                <a href="index.html#signup" class="btn btn-primary ms-3">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <section class="blog-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="display-4">Travel Blog</h1>
+                    <p class="lead">Get inspired with our travel stories, expert tips, and destination guides</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="blog-content">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <div class="blog-filters" role="group">
+                        <button type="button" class="btn active" data-filter="all">All Articles</button>
+                        <button type="button" class="btn" data-filter="tips">Travel Tips</button>
+                        <button type="button" class="btn" data-filter="destinations">Destinations</button>
+                        <button type="button" class="btn" data-filter="guides">Guides</button>
+                        <button type="button" class="btn" data-filter="stories">Stories</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row" id="blog-container">
+                <!-- Articles will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container text-center">
+            <h2 class="mb-4">Get Travel Inspiration in Your Inbox</h2>
+            <p class="lead mb-5">Subscribe to our newsletter for exclusive travel tips, deals, and stories</p>
+            
+            <form class="newsletter-form d-flex flex-wrap justify-content-center">
+                <input type="email" class="form-control newsletter-input" placeholder="Your email address" required>
+                <button type="submit" class="btn btn-subscribe">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h5>TravelFlow</h5>
+                    <p class="mt-3" style="color: rgba(255,255,255,0.7);">
+                        Making travel dreams a reality since 2008. We specialize in creating unforgettable experiences around the globe.
+                    </p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h5>Explore</h5>
+                        <ul>
+                            <li><a href="destinations.html">Destinations</a></li>
+                            <li><a href="packages.html">Packages</a></li>
+                            <li><a href="blog.html">Travel Blog</a></li>
+                            <li><a href="#">Special Offers</a></li>
+                            <li><a href="#">Group Tours</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+                    <div class="footer-links">
+                        <h5>Company</h5>
+                        <ul>
+                            <li><a href="index.html#about">About Us</a></li>
+                            <li><a href="#">Our Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                            <li><a href="#">Press</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="footer-links">
+                        <h5>Contact Info</h5>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt me-2" style="color: var(--accent-color);"></i> 123 Travel St, Adventure City</li>
+                            <li><i class="fas fa-phone me-2" style="color: var(--accent-color);"></i> +1 (555) 123-4567</li>
+                            <li><i class="fas fa-envelope me-2" style="color: var(--accent-color);"></i> info@travelflow.com</li>
+                            <li><i class="fas fa-clock me-2" style="color: var(--accent-color);"></i> Mon-Fri: 9AM - 6PM</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 TravelFlow. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample blog articles data
+            const articles = [
+                {
+                    id: 1,
+                    title: "10 Essential Travel Tips for First-Time International Travelers",
+                    category: "tips",
+                    date: "June 15, 2023",
+                    excerpt: "Learn the must-know tips to make your first international trip smooth and stress-free. From packing hacks to cultural etiquette, we've got you covered.",
+                    image: "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                    id: 2,
+                    title: "The Ultimate Bali Travel Guide: Where to Stay, Eat, and Explore",
+                    category: "destinations",
+                    date: "May 28, 2023",
+                    excerpt: "Discover the magic of Bali with our comprehensive guide to the island's best beaches, temples, and hidden gems.",
+                    image: "https://images.unsplash.com/photo-1518544864410-2c67f5ff5a35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                    id: 3,
+                    title: "Packing Light: How to Travel for 2 Weeks With Just a Carry-On",
+                    category: "tips",
+                    date: "May 12, 2023",
+                    excerpt: "Our expert packing tips will help you travel lighter and smarter, with everything you need and nothing you don't.",
+                    image: "https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                    id: 4,
+                    title: "Hidden Gems of Italy: 5 Underrated Towns You Need to Visit",
+                    category: "destinations",
+                    date: "April 30, 2023",
+                    excerpt: "Skip the crowds and discover these charming Italian towns that most tourists never see.",
+                    image: "https://images.unsplash.com/photo-1495563381401-ecfbcaaa60f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                    id: 5,
+                    title: "A Beginner's Guide to Travel Photography: Capturing Memories Like a Pro",
+                    category: "guides",
+                    date: "April 18, 2023",
+                    excerpt: "Learn the essential techniques to take stunning travel photos with just your smartphone or camera.",
+                    image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                },
+                {
+                    id: 6,
+                    title: "Solo Female Travel: My Journey Through Southeast Asia",
+                    category: "stories",
+                    date: "April 5, 2023",
+                    excerpt: "One woman's inspiring story of traveling alone through Thailand, Vietnam, and Cambodia for 3 months.",
+                    image: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+                }
+            ];
+
+            // Initial render of all articles
+            renderArticles(articles);
+            
+            // Filter functionality - now fully working
+            document.querySelectorAll('.blog-filters .btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.blog-filters .btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get filter value
+                    const filter = this.dataset.filter;
+                    
+                    // Filter articles
+                    let filteredArticles;
+                    if (filter === 'all') {
+                        filteredArticles = articles;
+                    } else {
+                        filteredArticles = articles.filter(article => article.category === filter);
+                    }
+                    
+                    // Render filtered articles
+                    renderArticles(filteredArticles);
+                });
+            });
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Newsletter form submission
+            document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = this.querySelector('input');
+                const email = emailInput.value;
+                
+                if (email) {
+                    // In a real app, you would send this to your server
+                    alert('Thank you for subscribing to our newsletter!');
+                    emailInput.value = '';
+                } else {
+                    alert('Please enter a valid email address');
+                }
+            });
+
+            // Function to render articles
+            function renderArticles(articlesToRender) {
+                const container = document.getElementById('blog-container');
+                
+                // Clear existing articles
+                container.innerHTML = '';
+                
+                // If no articles match the filter
+                if (articlesToRender.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-12 text-center py-5">
+                            <h3>No articles found in this category</h3>
+                            <p>Check back later for new content!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Create article cards
+                articlesToRender.forEach(article => {
+                    const articleCard = document.createElement('div');
+                    articleCard.className = 'col-md-6 col-lg-4 mb-4';
+                    articleCard.innerHTML = `
+                        <div class="blog-card">
+                            <div class="position-relative">
+                                <img src="${article.image}" class="blog-img w-100" alt="${article.title}">
+                                <span class="blog-badge">
+                                    ${article.category.charAt(0).toUpperCase() + article.category.slice(1)}
+                                </span>
+                            </div>
+                            <div class="blog-body">
+                                <h3 class="blog-title">${article.title}</h3>
+                                <div class="blog-meta">
+                                    <span class="blog-date">${article.date}</span>
+                                </div>
+                                <p class="blog-excerpt">${article.excerpt}</p>
+                                <a href="article.html?id=${article.id}" class="btn btn-read">
+                                    <i class="fas fa-book-open me-2"></i>
+                                    Read More
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(articleCard);
+                });
+                
+                // Set up intersection observer for animations
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('animated');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                // Observe all blog cards
+                document.querySelectorAll('.blog-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
