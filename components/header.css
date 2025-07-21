@@ -1,0 +1,131 @@
+/* Shared Header Styles - Matching index.html design */
+.navbar {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 15px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar.scrolled {
+  background: rgba(30, 60, 114, 0.95);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+}
+
+.navbar-brand {
+  color: white !important;
+  font-weight: bold;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+.navbar-brand i {
+  color: #feca57;
+  font-size: 1.8rem;
+}
+
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #feca57 !important;
+  transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link.active {
+  color: #feca57 !important;
+}
+
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #feca57;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 80%;
+}
+
+.btn-sign-up {
+  background: linear-gradient(45deg, #ff6b6b, #feca57);
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.btn-sign-up:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+  color: white;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991px) {
+  .navbar-nav {
+    background: rgba(30, 60, 114, 0.95);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 10px;
+    backdrop-filter: blur(10px);
+  }
+
+  .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    padding: 10px 0;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: #feca57 !important;
+  }
+
+  .btn-sign-up {
+    margin-top: 15px;
+    display: inline-block;
+  }
+
+  .navbar-toggler {
+    border: none !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    padding: 8px 12px;
+    border-radius: 5px;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: none !important;
+  }
+
+  .navbar-toggler i {
+    color: white !important;
+    font-size: 1.2rem;
+  }
+}

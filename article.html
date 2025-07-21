@@ -1,94 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TravelFlow - Article</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="components/header.css" rel="stylesheet" />
+    <link href="images/placeholder.css" rel="stylesheet" />
     <style>
-        .article-header {
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            color: #333;
-            padding: 100px 0 50px;
-        }
-        
-        .article-image {
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-        
-        .article-content {
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
+      .article-header {
+        background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        color: #333;
+        padding: 100px 0 50px;
+      }
+
+      .article-image {
+        border-radius: 15px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .article-content {
+        line-height: 1.8;
+        font-size: 1.1rem;
+      }
     </style>
-</head>
-<body>
-    <!-- Navigation (same as index.html) -->
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
 
     <!-- Article Header -->
     <section class="article-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1 id="article-title" class="display-4">Article Title</h1>
-                    <p id="article-meta" class="lead">Posted on <span id="article-date">June 15, 2023</span></p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 id="article-title" class="display-4">Article Title</h1>
+            <p id="article-meta" class="lead">
+              Posted on <span id="article-date">June 15, 2023</span>
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Article Content -->
     <section class="py-5">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <img id="article-image" src="" class="img-fluid article-image w-100" alt="">
-                    <div id="article-content" class="article-content">
-                        <!-- Content will be loaded here -->
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <img
+              id="article-image"
+              src=""
+              class="img-fluid article-image w-100"
+              alt=""
+            />
+            <div id="article-content" class="article-content">
+              <!-- Content will be loaded here -->
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer (same as index.html) -->
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const articleId = urlParams.get('id');
-            
-            // In a real app, this would fetch from an API
-            const articles = {
-                "1": {
-                    title: "10 Essential Travel Tips for First-Time International Travelers",
-                    date: "June 15, 2023",
-                    image: "https://source.unsplash.com/random/800x600?travel-tips",
-                    content: `
+      document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get("id");
+
+        // In a real app, this would fetch from an API
+        const articles = {
+          1: {
+            title:
+              "10 Essential Travel Tips for First-Time International Travelers",
+            date: "June 15, 2023",
+            image: "https://source.unsplash.com/random/800x600?travel-tips",
+            content: `
                         <p>Traveling internationally for the first time can be both exciting and overwhelming. Here are our top 10 tips to help you prepare:</p>
                         <h3>1. Check Passport and Visa Requirements</h3>
                         <p>Ensure your passport is valid for at least 6 months beyond your travel dates...</p>
                         <!-- More content -->
-                    `
-                }
-                // Add more articles
-            };
-            
-            const article = articles[articleId] || {
-                title: "Article Not Found",
-                date: "",
-                image: "https://source.unsplash.com/random/800x600?error",
-                content: "<p>The requested article could not be found.</p>"
-            };
-            
-            document.getElementById('article-title').textContent = article.title;
-            document.getElementById('article-date').textContent = article.date;
-            document.getElementById('article-image').src = article.image;
-            document.getElementById('article-content').innerHTML = article.content;
-        });
+                    `,
+          },
+          // Add more articles
+        };
+
+        const article = articles[articleId] || {
+          title: "Article Not Found",
+          date: "",
+          image: "https://source.unsplash.com/random/800x600?error",
+          content: "<p>The requested article could not be found.</p>",
+        };
+
+        document.getElementById("article-title").textContent = article.title;
+        document.getElementById("article-date").textContent = article.date;
+        document.getElementById("article-image").src = article.image;
+        document.getElementById("article-content").innerHTML = article.content;
+      });
     </script>
-</body>
+    <script src="components/header.js"></script>
+  </body>
 </html>

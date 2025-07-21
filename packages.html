@@ -1,779 +1,824 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TravelFlow - Premium Travel Packages</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="components/header.css" rel="stylesheet" />
+    <link href="images/placeholder.css" rel="stylesheet" />
     <style>
-        :root {
-            --primary-color: #f093fb;
-            --secondary-color: #f5576c;
-            --accent-color: #feca57;
-            --dark-color: #2c3e50;
-            --light-color: #f8f9fa;
+      :root {
+        --primary-color: #f093fb;
+        --secondary-color: #f5576c;
+        --accent-color: #feca57;
+        --dark-color: #2c3e50;
+        --light-color: #f8f9fa;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--light-color);
+        color: var(--dark-color);
+        overflow-x: hidden;
+      }
+
+      /* Hero Section */
+      .package-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        padding: 150px 0 80px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .package-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80")
+          center/cover;
+        opacity: 0.15;
+        z-index: 0;
+      }
+
+      .package-header .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      .package-header h1 {
+        font-weight: 800;
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .package-header .lead {
+        font-size: 1.5rem;
+        opacity: 0.9;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      /* Package Filters */
+      .package-filters {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 40px;
+      }
+
+      .package-filters .btn {
+        border-radius: 30px;
+        padding: 10px 25px;
+        font-weight: 600;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        transition: all 0.3s ease;
+      }
+
+      .package-filters .btn:hover,
+      .package-filters .btn.active {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        color: white;
+        border-color: transparent;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(240, 147, 251, 0.3);
+      }
+
+      /* Package Cards */
+      .package-card {
+        border-radius: 15px;
+        overflow: hidden;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.5s ease;
+        background: white;
+        height: 100%;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .package-card.animated {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .package-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .package-img {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .package-card:hover .package-img {
+        transform: scale(1.05);
+      }
+
+      .package-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        padding: 5px 15px;
+        border-radius: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .premium-badge {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        color: white;
+      }
+
+      .standard-badge {
+        background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        color: white;
+      }
+
+      .budget-badge {
+        background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        color: white;
+      }
+
+      .package-body {
+        padding: 25px;
+      }
+
+      .package-title {
+        font-weight: 700;
+        color: var(--dark-color);
+        margin-bottom: 15px;
+      }
+
+      .package-description {
+        color: #666;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .package-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .package-duration {
+        color: var(--primary-color);
+        font-weight: 600;
+      }
+
+      .package-price {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--dark-color);
+      }
+
+      .btn-package {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border: none;
+        border-radius: 30px;
+        padding: 12px;
+        color: white;
+        font-weight: 600;
+        width: 100%;
+        transition: all 0.3s ease;
+      }
+
+      .btn-package:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
+      }
+
+      /* Features Section */
+      .features-section {
+        background: white;
+        padding: 80px 0;
+      }
+
+      .feature-card {
+        background: rgba(240, 147, 251, 0.05);
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        height: 100%;
+        border: 1px solid rgba(240, 147, 251, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        border-color: rgba(240, 147, 251, 0.2);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+
+      /* Testimonials */
+      .testimonials-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 80px 0;
+      }
+
+      .testimonial-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 30px;
+        margin: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .testimonial-img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        margin-bottom: 15px;
+      }
+
+      .testimonial-rating {
+        color: var(--accent-color);
+        margin-bottom: 15px;
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--dark-color);
+        color: white;
+        padding: 80px 0 30px;
+      }
+
+      .footer-links h5 {
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 15px;
+        font-weight: 700;
+      }
+
+      .footer-links h5::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--accent-color);
+      }
+
+      .footer-links ul {
+        list-style: none;
+        padding-left: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--accent-color);
+        padding-left: 5px;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+      }
+
+      .social-icon:hover {
+        background: var(--accent-color);
+        transform: translateY(-3px);
+      }
+
+      .copyright {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 30px;
+        margin-top: 50px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
         }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--light-color);
-            color: var(--dark-color);
-            overflow-x: hidden;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        /* Navigation */
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            padding: 15px 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .navbar.scrolled {
-            padding: 10px 0;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .navbar-brand {
-            color: var(--dark-color) !important;
-            font-weight: 700;
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .navbar-brand i {
-            color: var(--accent-color);
-            font-size: 2rem;
-        }
-        
-        .nav-link {
-            font-weight: 500;
-            color: var(--dark-color) !important;
-            position: relative;
-            margin: 0 10px;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        
-        /* Hero Section */
-        .package-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 150px 0 80px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .package-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover;
-            opacity: 0.15;
-            z-index: 0;
-        }
-        
-        .package-header .container {
-            position: relative;
-            z-index: 1;
-        }
-        
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
         .package-header h1 {
-            font-weight: 800;
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+          font-size: 2.8rem;
         }
-        
+
         .package-header .lead {
-            font-size: 1.5rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto;
+          font-size: 1.3rem;
         }
-        
-        /* Package Filters */
+      }
+
+      @media (max-width: 768px) {
+        .package-header {
+          padding: 120px 0 60px;
+        }
+
+        .package-header h1 {
+          font-size: 2.2rem;
+        }
+
         .package-filters {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 40px;
+          flex-direction: column;
+          align-items: center;
         }
-        
+
         .package-filters .btn {
-            border-radius: 30px;
-            padding: 10px 25px;
-            font-weight: 600;
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            transition: all 0.3s ease;
+          width: 200px;
         }
-        
-        .package-filters .btn:hover,
-        .package-filters .btn.active {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-color: transparent;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(240, 147, 251, 0.3);
-        }
-        
-        /* Package Cards */
-        .package-card {
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.5s ease;
-            background: white;
-            height: 100%;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        
-        .package-card.animated {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .package-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .package-img {
-            height: 200px;
-            width: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .package-card:hover .package-img {
-            transform: scale(1.05);
-        }
-        
-        .package-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            padding: 5px 15px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .premium-badge {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            color: white;
-        }
-        
-        .standard-badge {
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            color: white;
-        }
-        
-        .budget-badge {
-            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
-            color: white;
-        }
-        
-        .package-body {
-            padding: 25px;
-        }
-        
-        .package-title {
-            font-weight: 700;
-            color: var(--dark-color);
-            margin-bottom: 15px;
-        }
-        
-        .package-description {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        
-        .package-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .package-duration {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        
-        .package-price {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--dark-color);
-        }
-        
-        .btn-package {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 30px;
-            padding: 12px;
-            color: white;
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-package:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(240, 147, 251, 0.3);
-        }
-        
-        /* Features Section */
-        .features-section {
-            background: white;
-            padding: 80px 0;
-        }
-        
-        .feature-card {
-            background: rgba(240, 147, 251, 0.05);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            height: 100%;
-            border: 1px solid rgba(240, 147, 251, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border-color: rgba(240, 147, 251, 0.2);
-        }
-        
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        /* Testimonials */
-        .testimonials-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 0;
-        }
-        
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .testimonial-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: 15px;
-        }
-        
-        .testimonial-rating {
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-        
-        /* Footer */
-        .footer {
-            background: var(--dark-color);
-            color: white;
-            padding: 80px 0 30px;
-        }
-        
-        .footer-links h5 {
-            margin-bottom: 25px;
-            position: relative;
-            padding-bottom: 15px;
-            font-weight: 700;
-        }
-        
-        .footer-links h5::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--accent-color);
-        }
-        
-        .footer-links ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: var(--accent-color);
-            padding-left: 5px;
-        }
-        
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            background: var(--accent-color);
-            transform: translateY(-3px);
-        }
-        
-        .copyright {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 30px;
-            margin-top: 50px;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Responsive */
-        @media (max-width: 992px) {
-            .package-header h1 {
-                font-size: 2.8rem;
-            }
-            
-            .package-header .lead {
-                font-size: 1.3rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .package-header {
-                padding: 120px 0 60px;
-            }
-            
-            .package-header h1 {
-                font-size: 2.2rem;
-            }
-            
-            .package-filters {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .package-filters .btn {
-                width: 200px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="fas fa-mountain"></i>
-                TravelFlow
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="destinations.html">Destinations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="packages.html">Packages</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="blog.html">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html#contact">Contact</a>
-                    </li>
-                </ul>
-                <a href="index.html#signup" class="btn btn-primary ms-3">Sign Up</a>
-            </div>
-        </div>
-    </nav>
+    <div id="header-container"></div>
 
     <!-- Packages Header -->
     <section class="package-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1 class="display-4">Tailored Travel Packages</h1>
-                    <p class="lead">Discover the perfect package for your dream vacation, designed for every budget and travel style</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="display-4">Tailored Travel Packages</h1>
+            <p class="lead">
+              Discover the perfect package for your dream vacation, designed for
+              every budget and travel style
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Packages Content -->
     <section class="py-5">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 text-center">
-                    <div class="package-filters" role="group">
-                        <button type="button" class="btn active" data-filter="all">All Packages</button>
-                        <button type="button" class="btn" data-filter="premium">Premium</button>
-                        <button type="button" class="btn" data-filter="standard">Standard</button>
-                        <button type="button" class="btn" data-filter="budget">Budget</button>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <div class="package-filters" role="group">
+              <button type="button" class="btn active" data-filter="all">
+                All Packages
+              </button>
+              <button type="button" class="btn" data-filter="premium">
+                Premium
+              </button>
+              <button type="button" class="btn" data-filter="standard">
+                Standard
+              </button>
+              <button type="button" class="btn" data-filter="budget">
+                Budget
+              </button>
             </div>
-            
-            <div class="row" id="package-container">
-                <!-- Packages will be loaded here -->
-            </div>
+          </div>
         </div>
+
+        <div class="row" id="package-container">
+          <!-- Packages will be loaded here -->
+        </div>
+      </div>
     </section>
 
     <!-- Features Section -->
     <section class="features-section">
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col-12 text-center">
-                    <h2 class="display-5 fw-bold">What's Included</h2>
-                    <p class="lead">All our packages come with these amazing benefits</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon">
-                            <i class="fas fa-hotel"></i>
-                        </div>
-                        <h4>Quality Accommodations</h4>
-                        <p>Carefully selected hotels and resorts that match your package level, from budget-friendly to luxury.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <h4>Daily Breakfast</h4>
-                        <p>Start each day right with breakfast included at all our partner hotels and resorts.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card text-center">
-                        <div class="feature-icon">
-                            <i class="fas fa-headset"></i>
-                        </div>
-                        <h4>24/7 Support</h4>
-                        <p>Our travel experts are available around the clock to assist you during your trip.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h2 class="display-5 fw-bold">What's Included</h2>
+            <p class="lead">
+              All our packages come with these amazing benefits
+            </p>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="feature-card text-center">
+              <div class="feature-icon">
+                <i class="fas fa-hotel"></i>
+              </div>
+              <h4>Quality Accommodations</h4>
+              <p>
+                Carefully selected hotels and resorts that match your package
+                level, from budget-friendly to luxury.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-card text-center">
+              <div class="feature-icon">
+                <i class="fas fa-utensils"></i>
+              </div>
+              <h4>Daily Breakfast</h4>
+              <p>
+                Start each day right with breakfast included at all our partner
+                hotels and resorts.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="feature-card text-center">
+              <div class="feature-icon">
+                <i class="fas fa-headset"></i>
+              </div>
+              <h4>24/7 Support</h4>
+              <p>
+                Our travel experts are available around the clock to assist you
+                during your trip.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Testimonials Section -->
     <section class="testimonials-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center mb-5">
-                    <h2 class="display-5 fw-bold">Traveler Experiences</h2>
-                    <p class="lead">What our guests say about our packages</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="testimonial-card text-center">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah J." class="testimonial-img">
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="mb-4">"The premium package exceeded all our expectations. Every detail was perfectly arranged!"</p>
-                        <h5>Sarah J.</h5>
-                        <p class="text-white-50">Bali Premium Package</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="testimonial-card text-center">
-                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T." class="testimonial-img">
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                        <p class="mb-4">"Great value with the standard package. Perfect balance of comfort and affordability."</p>
-                        <h5>Michael T.</h5>
-                        <p class="text-white-50">Paris Standard Package</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="testimonial-card text-center">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emily R." class="testimonial-img">
-                        <div class="testimonial-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="mb-4">"The budget package was perfect for my solo adventure. Everything I needed at a great price."</p>
-                        <h5>Emily R.</h5>
-                        <p class="text-white-50">Tokyo Budget Package</p>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center mb-5">
+            <h2 class="display-5 fw-bold">Traveler Experiences</h2>
+            <p class="lead">What our guests say about our packages</p>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="testimonial-card text-center">
+              <img
+                src="https://randomuser.me/api/portraits/women/32.jpg"
+                alt="Sarah J."
+                class="testimonial-img"
+              />
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p class="mb-4">
+                "The premium package exceeded all our expectations. Every detail
+                was perfectly arranged!"
+              </p>
+              <h5>Sarah J.</h5>
+              <p class="text-white-50">Bali Premium Package</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="testimonial-card text-center">
+              <img
+                src="https://randomuser.me/api/portraits/men/45.jpg"
+                alt="Michael T."
+                class="testimonial-img"
+              />
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <p class="mb-4">
+                "Great value with the standard package. Perfect balance of
+                comfort and affordability."
+              </p>
+              <h5>Michael T.</h5>
+              <p class="text-white-50">Paris Standard Package</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="testimonial-card text-center">
+              <img
+                src="https://randomuser.me/api/portraits/women/68.jpg"
+                alt="Emily R."
+                class="testimonial-img"
+              />
+              <div class="testimonial-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <p class="mb-4">
+                "The budget package was perfect for my solo adventure.
+                Everything I needed at a great price."
+              </p>
+              <h5>Emily R.</h5>
+              <p class="text-white-50">Tokyo Budget Package</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h5>TravelFlow</h5>
-                    <p class="mt-3" style="color: rgba(255,255,255,0.7);">
-                        Making travel dreams a reality since 2008. We specialize in creating unforgettable experiences around the globe.
-                    </p>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                    <div class="footer-links">
-                        <h5>Explore</h5>
-                        <ul>
-                            <li><a href="destinations.html">Destinations</a></li>
-                            <li><a href="packages.html">Packages</a></li>
-                            <li><a href="blog.html">Travel Blog</a></li>
-                            <li><a href="#">Special Offers</a></li>
-                            <li><a href="#">Group Tours</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
-                    <div class="footer-links">
-                        <h5>Company</h5>
-                        <ul>
-                            <li><a href="index.html#about">About Us</a></li>
-                            <li><a href="#">Our Team</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Press</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="footer-links">
-                        <h5>Contact Info</h5>
-                        <ul>
-                            <li><i class="fas fa-map-marker-alt me-2" style="color: var(--accent-color);"></i> 123 Travel St, Adventure City</li>
-                            <li><i class="fas fa-phone me-2" style="color: var(--accent-color);"></i> +1 (555) 123-4567</li>
-                            <li><i class="fas fa-envelope me-2" style="color: var(--accent-color);"></i> info@travelflow.com</li>
-                            <li><i class="fas fa-clock me-2" style="color: var(--accent-color);"></i> Mon-Fri: 9AM - 6PM</li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 mb-5 mb-lg-0">
+            <h5>TravelFlow</h5>
+            <p class="mt-3" style="color: rgba(255, 255, 255, 0.7)">
+              Making travel dreams a reality since 2008. We specialize in
+              creating unforgettable experiences around the globe.
+            </p>
+            <div class="social-icons">
+              <a href="#" class="social-icon"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="social-icon"
+                ><i class="fab fa-pinterest"></i
+              ></a>
             </div>
-            <div class="copyright">
-                &copy; 2023 TravelFlow. All rights reserved.
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+            <div class="footer-links">
+              <h5>Explore</h5>
+              <ul>
+                <li><a href="destinations.html">Destinations</a></li>
+                <li><a href="packages.html">Packages</a></li>
+                <li><a href="blog.html">Travel Blog</a></li>
+                <li><a href="#">Special Offers</a></li>
+                <li><a href="#">Group Tours</a></li>
+              </ul>
             </div>
+          </div>
+          <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+            <div class="footer-links">
+              <h5>Company</h5>
+              <ul>
+                <li><a href="index.html#about">About Us</a></li>
+                <li><a href="#">Our Team</a></li>
+                <li><a href="#">Careers</a></li>
+                <li><a href="#">Press</a></li>
+                <li><a href="#">Contact</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="footer-links">
+              <h5>Contact Info</h5>
+              <ul>
+                <li>
+                  <i
+                    class="fas fa-map-marker-alt me-2"
+                    style="color: var(--accent-color)"
+                  ></i>
+                  123 Travel St, Adventure City
+                </li>
+                <li>
+                  <i
+                    class="fas fa-phone me-2"
+                    style="color: var(--accent-color)"
+                  ></i>
+                  +1 (555) 123-4567
+                </li>
+                <li>
+                  <i
+                    class="fas fa-envelope me-2"
+                    style="color: var(--accent-color)"
+                  ></i>
+                  info@travelflow.com
+                </li>
+                <li>
+                  <i
+                    class="fas fa-clock me-2"
+                    style="color: var(--accent-color)"
+                  ></i>
+                  Mon-Fri: 9AM - 6PM
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+        <div class="copyright">
+          &copy; 2023 TravelFlow. All rights reserved.
+        </div>
+      </div>
     </footer>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const packages = [
-                {
-                    type: "premium",
-                    title: "Premium Bali Getaway",
-                    description: "Experience ultimate luxury with private pool villas, personalized butler service, and exclusive cultural experiences. Includes first-class flights, gourmet dining, and private tours.",
-                    price: "$2,999",
-                    duration: "7 days",
-                    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    type: "premium",
-                    title: "Luxury Paris Escape",
-                    description: "Indulge in the City of Lights with 5-star accommodations, private Seine River cruise, VIP access to museums, and Michelin-star dining experiences.",
-                    price: "$3,499",
-                    duration: "5 days",
-                    image: "https://images.unsplash.com/photo-1431274172761-fca41d930114?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    type: "standard",
-                    title: "Classic Italy Tour",
-                    description: "Explore Rome, Florence and Venice with comfortable 4-star hotels, guided tours of major attractions, and authentic Italian dining experiences.",
-                    price: "$1,899",
-                    duration: "8 days",
-                    image: "https://images.unsplash.com/photo-1529260830199-42c24126f198?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    type: "standard",
-                    title: "Japanese Adventure",
-                    description: "Discover Tokyo, Kyoto and Osaka with quality accommodations, bullet train transfers, and guided tours of temples, gardens and markets.",
-                    price: "$2,199",
-                    duration: "10 days",
-                    image: "https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    type: "budget",
-                    title: "Thailand Explorer",
-                    description: "Affordable adventure through Bangkok, Chiang Mai and Phuket with clean 3-star hotels, local transportation, and essential tours included.",
-                    price: "$899",
-                    duration: "9 days",
-                    image: "https://images.unsplash.com/photo-1528181304800-259b08848526?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
-                },
-                {
-                    type: "budget",
-                    title: "Eastern Europe Highlights",
-                    description: "Visit Prague, Budapest and Vienna on a budget with centrally located hostels, walking tours, and tips for affordable dining and attractions.",
-                    price: "$749",
-                    duration: "7 days",
-                    image: "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+      document.addEventListener("DOMContentLoaded", function () {
+        const packages = [
+          {
+            type: "premium",
+            title: "Premium Bali Getaway",
+            description:
+              "Experience ultimate luxury with private pool villas, personalized butler service, and exclusive cultural experiences. Includes first-class flights, gourmet dining, and private tours.",
+            price: "$2,999",
+            duration: "7 days",
+            image:
+              "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          },
+          {
+            type: "premium",
+            title: "Luxury Paris Escape",
+            description:
+              "Indulge in the City of Lights with 5-star accommodations, private Seine River cruise, VIP access to museums, and Michelin-star dining experiences.",
+            price: "$3,499",
+            duration: "5 days",
+            image:
+              "https://images.unsplash.com/photo-1431274172761-fca41d930114?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          },
+          {
+            type: "standard",
+            title: "Classic Italy Tour",
+            description:
+              "Explore Rome, Florence and Venice with comfortable 4-star hotels, guided tours of major attractions, and authentic Italian dining experiences.",
+            price: "$1,899",
+            duration: "8 days",
+            image:
+              "https://images.unsplash.com/photo-1529260830199-42c24126f198?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          },
+          {
+            type: "standard",
+            title: "Japanese Adventure",
+            description:
+              "Discover Tokyo, Kyoto and Osaka with quality accommodations, bullet train transfers, and guided tours of temples, gardens and markets.",
+            price: "$2,199",
+            duration: "10 days",
+            image:
+              "https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          },
+          {
+            type: "budget",
+            title: "Thailand Explorer",
+            description:
+              "Affordable adventure through Bangkok, Chiang Mai and Phuket with clean 3-star hotels, local transportation, and essential tours included.",
+            price: "$899",
+            duration: "9 days",
+            image:
+              "https://images.unsplash.com/photo-1528181304800-259b08848526?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          },
+          {
+            type: "budget",
+            title: "Eastern Europe Highlights",
+            description:
+              "Visit Prague, Budapest and Vienna on a budget with centrally located hostels, walking tours, and tips for affordable dining and attractions.",
+            price: "$749",
+            duration: "7 days",
+            image:
+              "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+          },
+        ];
+
+        // Initial render
+        renderPackages(packages);
+        setupIntersectionObserver();
+
+        // Filter functionality
+        document.querySelectorAll(".package-filters .btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            // Update active button
+            document
+              .querySelector(".package-filters .btn.active")
+              .classList.remove("active");
+            this.classList.add("active");
+
+            // Filter packages
+            const filter = this.dataset.filter;
+            const filteredPackages =
+              filter === "all"
+                ? packages
+                : packages.filter((pkg) => pkg.type === filter);
+
+            // Render filtered packages
+            renderPackages(filteredPackages);
+          });
+        });
+
+        // Setup intersection observer for animations
+        function setupIntersectionObserver() {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("animated");
                 }
-            ];
+              });
+            },
+            { threshold: 0.1 }
+          );
 
-            // Initial render
-            renderPackages(packages);
-            setupIntersectionObserver();
-            
-            // Filter functionality
-            document.querySelectorAll('.package-filters .btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Update active button
-                    document.querySelector('.package-filters .btn.active').classList.remove('active');
-                    this.classList.add('active');
-                    
-                    // Filter packages
-                    const filter = this.dataset.filter;
-                    const filteredPackages = filter === 'all' 
-                        ? packages 
-                        : packages.filter(pkg => pkg.type === filter);
-                    
-                    // Render filtered packages
-                    renderPackages(filteredPackages);
-                });
-            });
+          document.querySelectorAll(".package-card").forEach((card) => {
+            observer.observe(card);
+          });
+        }
 
-            // Setup intersection observer for animations
-            function setupIntersectionObserver() {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('animated');
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.package-card').forEach(card => {
-                    observer.observe(card);
-                });
-            }
-
-            // Render packages function
-            function renderPackages(packagesToRender) {
-                const container = document.getElementById('package-container');
-                container.innerHTML = packagesToRender.map(pkg => `
-                    <div class="col-md-6 col-lg-4 mb-4 package-item" data-type="${pkg.type}">
+        // Render packages function
+        function renderPackages(packagesToRender) {
+          const container = document.getElementById("package-container");
+          container.innerHTML = packagesToRender
+            .map(
+              (pkg) => `
+                    <div class="col-md-6 col-lg-4 mb-4 package-item" data-type="${
+                      pkg.type
+                    }">
                         <div class="package-card">
                             <div class="position-relative">
-                                <img src="${pkg.image}" class="package-img w-100" alt="${pkg.title}">
+                                <img src="${
+                                  pkg.image
+                                }" class="package-img w-100" alt="${pkg.title}">
                                 <span class="package-badge ${pkg.type}-badge">
-                                    ${pkg.type.charAt(0).toUpperCase() + pkg.type.slice(1)}
+                                    ${
+                                      pkg.type.charAt(0).toUpperCase() +
+                                      pkg.type.slice(1)
+                                    }
                                 </span>
                             </div>
                             <div class="package-body">
                                 <h3 class="package-title">${pkg.title}</h3>
-                                <p class="package-description">${pkg.description}</p>
+                                <p class="package-description">${
+                                  pkg.description
+                                }</p>
                                 <div class="package-meta">
-                                    <span class="package-duration">${pkg.duration}</span>
-                                    <span class="package-price">${pkg.price}</span>
+                                    <span class="package-duration">${
+                                      pkg.duration
+                                    }</span>
+                                    <span class="package-price">${
+                                      pkg.price
+                                    }</span>
                                 </div>
                                 <button class="btn-package">
                                     <i class="fas fa-calendar-check me-2"></i>
@@ -782,21 +827,29 @@
                             </div>
                         </div>
                     </div>
-                `).join('');
-                
-                // Add event listeners to book buttons
-                document.querySelectorAll('.btn-package').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const packageTitle = this.closest('.package-body').querySelector('.package-title').textContent;
-                        alert(`You've selected the ${packageTitle}. Our booking system would open here in a full implementation.`);
-                    });
-                });
+                `
+            )
+            .join("");
 
-                // Re-setup intersection observer for newly rendered cards
-                setupIntersectionObserver();
-            }
-        });
+          // Add event listeners to book buttons
+          document.querySelectorAll(".btn-package").forEach((btn) => {
+            btn.addEventListener("click", function (e) {
+              e.preventDefault();
+              const packageTitle =
+                this.closest(".package-body").querySelector(
+                  ".package-title"
+                ).textContent;
+              alert(
+                `You've selected the ${packageTitle}. Our booking system would open here in a full implementation.`
+              );
+            });
+          });
+
+          // Re-setup intersection observer for newly rendered cards
+          setupIntersectionObserver();
+        }
+      });
     </script>
-</body>
+    <script src="components/header.js"></script>
+  </body>
 </html>

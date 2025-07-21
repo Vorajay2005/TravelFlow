@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TravelFlow - Testimonials</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="components/header.css" rel="stylesheet" />
+    <link href="images/placeholder.css" rel="stylesheet" />
+    <style>
+      :root {
+        --primary-color: #5ee7df;
+        --secondary-color: #b490ca;
+        --accent-color: #feca57;
+        --dark-color: #1e3c72;
+        --light-color: #f8f9fa;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: var(--light-color);
+        color: #333;
+        overflow-x: hidden;
+      }
+
+      .testimonials-header {
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
+        );
+        color: white;
+        padding: 150px 0 80px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .testimonials-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80")
+          center/cover;
+        opacity: 0.2;
+        z-index: 0;
+      }
+
+      .testimonials-header .container {
+        position: relative;
+        z-index: 1;
+      }
+
+      .testimonial-card {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .testimonial-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+
+      .testimonial-quote {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+        font-style: italic;
+        color: #555;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .author-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .author-info h5 {
+        margin: 0;
+        color: var(--dark-color);
+      }
+
+      .author-info p {
+        margin: 0;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .rating {
+        color: #feca57;
+        margin-bottom: 15px;
+      }
+
+      .quote-icon {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 2rem;
+        color: var(--primary-color);
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <div id="header-container"></div>
+
+    <!-- Testimonials Header -->
+    <section class="testimonials-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="display-4">What Our Travelers Say</h1>
+            <p class="lead">
+              Real experiences from real travelers who chose TravelFlow for
+              their adventures
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Content -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row" id="testimonials-container">
+          <!-- Testimonials will be loaded here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const testimonials = [
+          {
+            name: "Sarah Johnson",
+            location: "New York, USA",
+            rating: 5,
+            quote:
+              "TravelFlow made our honeymoon in Bali absolutely perfect! Every detail was taken care of, from the beautiful resort to the amazing cultural experiences. We couldn't have asked for a better trip!",
+            initial: "S",
+          },
+          {
+            name: "Michael Chen",
+            location: "Toronto, Canada",
+            rating: 5,
+            quote:
+              "The Tokyo package exceeded all our expectations. The guides were knowledgeable, the accommodations were top-notch, and we got to experience authentic Japanese culture. Highly recommend TravelFlow!",
+            initial: "M",
+          },
+          {
+            name: "Emma Rodriguez",
+            location: "Madrid, Spain",
+            rating: 4,
+            quote:
+              "Our family trip to Paris was magical! TravelFlow organized everything perfectly, and the kids loved all the activities. The Eiffel Tower visit at sunset was unforgettable.",
+            initial: "E",
+          },
+          {
+            name: "David Thompson",
+            location: "London, UK",
+            rating: 5,
+            quote:
+              "As a solo traveler, I was nervous about visiting Rome, but TravelFlow's support was incredible. The guided tours were informative, and I felt safe and well-cared for throughout my journey.",
+            initial: "D",
+          },
+          {
+            name: "Lisa Wang",
+            location: "Sydney, Australia",
+            rating: 5,
+            quote:
+              "The New York City package was amazing! We saw all the major attractions and discovered some hidden gems too. TravelFlow's local expertise really made the difference.",
+            initial: "L",
+          },
+          {
+            name: "James Miller",
+            location: "Chicago, USA",
+            rating: 4,
+            quote:
+              "Our Australian adventure was the trip of a lifetime! From Sydney's harbor to the Outback, every moment was carefully planned and executed. Thank you, TravelFlow!",
+            initial: "J",
+          },
+        ];
+
+        function renderTestimonials() {
+          const container = document.getElementById("testimonials-container");
+
+          testimonials.forEach((testimonial) => {
+            const testimonialCard = document.createElement("div");
+            testimonialCard.className = "col-lg-6 mb-4";
+
+            const stars = Array(testimonial.rating)
+              .fill('<i class="fas fa-star"></i>')
+              .join("");
+            const emptyStars = Array(5 - testimonial.rating)
+              .fill('<i class="far fa-star"></i>')
+              .join("");
+
+            testimonialCard.innerHTML = `
+                        <div class="testimonial-card">
+                            <i class="fas fa-quote-right quote-icon"></i>
+                            <div class="rating mb-3">
+                                ${stars}${emptyStars}
+                            </div>
+                            <p class="testimonial-quote">"${testimonial.quote}"</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    ${testimonial.initial}
+                                </div>
+                                <div class="author-info">
+                                    <h5>${testimonial.name}</h5>
+                                    <p>${testimonial.location}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+            container.appendChild(testimonialCard);
+          });
+        }
+
+        renderTestimonials();
+
+        // Navbar scroll effect
+        window.addEventListener("scroll", function () {
+          const navbar = document.querySelector(".navbar");
+          if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+          } else {
+            navbar.classList.remove("scrolled");
+          }
+        });
+      });
+    </script>
+    <script src="components/header.js"></script>
+  </body>
+</html>
