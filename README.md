@@ -4,6 +4,8 @@
 
 TravelFlow is a modern, responsive travel website that helps users discover amazing destinations, explore travel packages, and plan their perfect getaway. Built with clean HTML, CSS, and JavaScript, it offers an immersive user experience with beautiful animations and interactive features.
 
+🌐 **[Live Demo](https://travel-flow.netlify.app/)**
+
 ## ✨ Features
 
 - **🏠 Homepage**: Stunning hero section with parallax effects and smooth animations
@@ -59,6 +61,12 @@ TravelFlow/
 - Background: `#f8f9fa` (Light Gray)
 
 ## 🛠️ Installation & Setup
+
+### Quick Start
+
+🌐 **[View Live Demo](https://travel-flow.netlify.app/)** - No installation required!
+
+### Local Development
 
 1. **Clone or Download** the project files
 2. **Web Server**: Place files in your web server directory (e.g., XAMPP's htdocs)
@@ -164,6 +172,7 @@ Update CSS custom properties in the `<style>` section of each HTML file:
 
 1. Create a new HTML file (e.g., `newpage.html`)
 2. Add the embedded `<style>` section in the `<head>`:
+
    ```html
    <head>
      <!-- External CSS libraries -->
@@ -182,6 +191,7 @@ Update CSS custom properties in the `<style>` section of each HTML file:
      </style>
    </head>
    ```
+
 3. Use the existing CSS variables and design patterns for consistency
 
 ### Styling Structure
